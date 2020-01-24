@@ -66,7 +66,7 @@ exports.guid = function (src) {
         var sum = crypto.createHash('sha1');
 
         // namespace in raw form. FIXME using ns:URL for now, what should it be?
-        sum.update(new Buffer('a6e4EZ2tEdGAtADAT9QwyA==', 'base64'));
+        sum.update(new Buffer.from('a6e4EZ2tEdGAtADAT9QwyA==', 'base64'));
 
         // add HTTP path
         sum.update(src);
@@ -257,7 +257,7 @@ exports.fsdelete = function (path) {
  */
 exports.fsreadJson = function (path) {
     return exports.fsread(path).then(function (data) {
-        return JSON.parse(new Buffer(data).toString());
+        return JSON.parse(new Buffer.from(data).toString());
     });
 };
 
@@ -484,7 +484,7 @@ exports.fsTemplateRead = function (source, substitutions) {
  * @returns {*|string}
  */
 exports.base64Encode = function (object) {
-    return new Buffer(JSON.stringify(object)).toString('base64');
+    return new Buffer.from(JSON.stringify(object)).toString('base64');
 };
 
 /**
@@ -492,7 +492,7 @@ exports.base64Encode = function (object) {
  * @returns {*|string}
  */
 exports.base64Decode = function (str) {
-    return new Buffer(str, 'base64').toString('ascii');
+    return new Buffer.from(str, 'base64').toString('ascii');
 };
 
 /**
@@ -509,7 +509,7 @@ exports.basicAuthorizationHeaderValid = function (auth, clientId, clientSecret, 
 
     if (auth.indexOf('Basic ') == 0) {
         var authParts = auth.split('Basic ');
-        var p = new Buffer(authParts[1], 'base64').toString();
+        var p = new Buffer.from(authParts[1], 'base64').toString();
         var pParts = p.split(':');
         var authClientId = pParts[0];
         var authSecret = pParts[1];
@@ -574,7 +574,7 @@ exports.jiveAuthorizationHeaderValid = function (auth, clientId, clientSecret, a
         });
 
         //do signature verification
-        var hmac_signature = crypto.createHmac('SHA256', new Buffer(clientSecret, 'base64')).update(str).digest('base64');
+        var hmac_signature = crypto.createHmac('SHA256', new Buffer.from(clientSecret, 'base64')).update(str).digest('base64');
         return hmac_signature == decodeURIComponent(signature);
     } else {
         return true;

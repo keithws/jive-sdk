@@ -1,3 +1,7 @@
+# Why the fork exists
+
+This fork exists purely to resolve known vulnerabilities in dependencies since Jive seems to have abandoned this package.
+
 # Jive Node SDK
 
 This repository contains the Jive Node.js SDK to help you get started using the [Jive Development Platform](https://developer.jivesoftware.com).

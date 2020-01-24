@@ -24,7 +24,7 @@ module.exports = function(grunt) {
                     },
                     setupSuite: function () {
                         var logger = jive.logger;
-                        logger.setLevel('FATAL');
+                        logger.level = 'FATAL';
                         jive['context']['config']['logLevel'] = 'FATAL';
                         console.log('registering');
                         mockery.registerMock('jive-sdk', jive);

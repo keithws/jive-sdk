@@ -38,7 +38,7 @@ var makeRunner = function() {
 
 function muteJiveLogging(jive) {
     var logger = jive.logger;
-    logger.setLevel('FATAL');
+    logger.level = 'FATAL';
     jive['context']['config']['logLevel'] = 'FATAL';
 }
 

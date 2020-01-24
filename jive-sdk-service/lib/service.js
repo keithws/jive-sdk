@@ -356,7 +356,12 @@ function initLogger(options) {
         log4js.clearAppenders();
 
         //
-        log4js.addAppender(customLoggingAppender, 'jive-sdk');
+        log4js.configure({
+            appenders: { 'jive-sdk' : customLoggingAppender },
+            categories: {
+                default: { appenders: [ 'jive-sdk' ], level: 'info' }
+            }
+        });
     }
 
     var logfile = options['logFile'] || options['logfile'];
@@ -375,17 +380,31 @@ function initLogger(options) {
         var logFileNumBackups = options['logFileNumBackups'] || undefined;
         var logFileLayout = undefined; // Force default layout
 
-        log4js.loadAppender('file');
-        log4js.addAppender(log4js.appenders.file(logfile, logFileLayout, logFileSize, logFileNumBackups), 'jive-sdk');
+        log4js.configure({
+            appenders: {
+                'jive-sdk': {
+                    type: 'file',
+                    filename: logfile,
+                    layout: logFileLayout,
+                    size: logFileSize,
+                    numBackups: logFileNumBackups
+                }
+            },
+            categories: {
+                default: { appenders: [ 'jive-sdk' ], level: 'info' }
+            }
+        });
     }
 
-    jive.logger.setLevel(logLevel);
+    jive.logger.level = logLevel;
 
     jive.logger['addLogger'] = function(loggerName) {
         if ( customLoggingAppender ) {
-            log4js.addAppender(customLoggingAppender, loggerName);
+            let settings = {};
+            settings[loggerName] = customLoggingAppender;
+            log4js.configure(settings);
         }
-        log4js.getLogger(loggerName).setLevel(logLevel);
+        log4js.getLogger(loggerName).level = logLevel;
     };
 
     jive.logger['getLogger'] = function(loggerName) {

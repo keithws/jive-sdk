@@ -76,7 +76,7 @@ exports.requestAccessToken = function (options, successCallback, failureCallback
         } else {
             // otherwise we deal directly with jive
             var tokenRequestEndPoint = options.jiveUrl + JIVE_OAUTH2_TOKEN_REQUEST_PATH;
-            var auth = "Basic " + new Buffer(accessTokenRequest.client_id + ':' + options.client_secret).toString('base64');
+            var auth = "Basic " + new Buffer.from(accessTokenRequest.client_id + ':' + options.client_secret).toString('base64');
             var headers = {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Authorization": auth
@@ -115,7 +115,7 @@ exports.refreshAccessToken = function (options, successCallback, failureCallback
         } else {
             // otherwise we deal directly with jive
             var tokenRequestEndPoint = options.jiveUrl + JIVE_OAUTH2_TOKEN_REQUEST_PATH;
-            var auth = "Basic " + new Buffer(accessTokenRequest.client_id + ':' + options.client_secret).toString('base64');
+            var auth = "Basic " + new Buffer.from(accessTokenRequest.client_id + ':' + options.client_secret).toString('base64');
             var headers = {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Authorization": auth
